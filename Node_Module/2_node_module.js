@@ -9,7 +9,8 @@
 // const contoh = require("./path"); //Local Module -> path ./ in one folde if ahead folder can use ./../ etc
 // const moment = require("moment"); // Third party -> if you need more modules and fast u can install and check documentation anything need install
 
-const coba1 = require("./2_node_module_example");
+const coba1 = require("./2_node_module_example"); // refer to path file 2_node_modules_example.
+
 console.log(coba1.nama);
 
 console.log(coba1.sayHello("aris", 21));
