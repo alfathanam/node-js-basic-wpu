@@ -1,19 +1,39 @@
 // * Adjust and use another way to create contact app
 // * this is part 2, so let code
 
-console.log(process.argv[2]); //Process is  build existing on node and call without call cause not function
+// console.log(process.argv[2]); //Process is  build existing on node and call without call cause not function
+const contacts = require("./contacts");
+const yargs = require("yargs");
+yargs.command({
+  command: "add",
+  describe: "menambahkan contact baru",
+  builder: {
+    name: {
+      describe: "nama lengkap",
+      demandOption: true,
+      type: "string",
+    },
+    email: {
+      describe: "email user",
+      demandOption: false,
+      type: "string",
+    },
+    noHp: {
+      describe: "number phone",
+      demandOption: true,
+      type: "string",
+    },
+  },
+  handler(argv) {
+    // const contact = {
+    //   name: argv.name,
+    //   email: argv.email,
+    //   noHp: argv.noHp,
+    // };
+    // console.log(contact);
 
+    contacts.simpanData(argv.name, argv.email, argv.noHp);
+  },
+});
 
-
-// const contacts = require("./contacts");
-// // const { tulisPertanyaan, simpanData } = require("./contacts"); // you can do this
-
-// const mainFunc = async () => {
-//   const name = await contacts.tulisPertanyaan("Who is your name?\n");
-//   const email = await contacts.tulisPertanyaan("What is your email?\n");
-//   const noTelp = await contacts.tulisPertanyaan("What is your number phone?\n");
-
-//   contacts.simpanData(name, email, noTelp);
-// };
-
-// mainFunc();
+yargs.parse();
