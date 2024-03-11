@@ -82,4 +82,37 @@ const getContactList = () => {
   });
 };
 // getContactList();
-module.exports = { simpanData, getContactList };
+
+//Todo create method for detailsContact
+const detailsContact = (name) => {
+  const contacts = getDataJson();
+  const contact = contacts.find((nm) => {
+    return name.toLowerCase() === nm.name.toLowerCase();
+  });
+  // console.log(contact);
+  if (!contact) {
+    console.log(
+      chalk.red.inverse.bold` ${name} yang anda cari tidak ada dalam list`
+    );
+    return false;
+  }
+  if (contact) {
+    console.log(
+      chalk.red.inverse
+        .greenBright` name on database : ${name} yang anda cari ada dalam list`
+    );
+
+    console.log(contact.name);
+    console.log(contact.noTelp);
+    if (contact.email) {
+      console.log(contact.email);
+    } else {
+      console.log("email it is not fill");
+    }
+
+    return true;
+  }
+};
+
+detailsContact("aris123");
+module.exports = { simpanData, getContactList, detailsContact };
