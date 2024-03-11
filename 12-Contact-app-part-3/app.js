@@ -28,5 +28,12 @@ yargs
   .demandCommand();
 
 // Todo Menampilkan daftar semua nama & no Hp
+yargs.command({
+  command: "list",
+  describe: "tampilkan semua nama & ho HP",
+  handler() {
+    contacts.getContactList();
+  },
+});
 
 yargs.parse();
