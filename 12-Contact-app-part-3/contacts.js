@@ -113,6 +113,31 @@ const detailsContact = (name) => {
     return true;
   }
 };
+// detailsContact("aris123");
 
-detailsContact("aris123");
-module.exports = { simpanData, getContactList, detailsContact };
+// Todo create method removeData
+
+const removeData = (name) => {
+  const contacts = getDataJson();
+  const newContacts = contacts.filter((dtName) => {
+    return dtName.name.toLowerCase() !== name.toLowerCase();
+  });
+  // console.log(newContacts);
+  if (contacts.length === newContacts.length) {
+    console.log(
+      chalk.red.inverse.bold` data : ${name} yang anda cari tidak ditemukan`
+    );
+  } else {
+    try {
+      fs.writeFileSync("data/contacts.json", JSON.stringify(newContacts)); // Rewrite to newContacts
+    } catch (err) {
+      return console.log(err);
+    }
+    console.log(
+      chalk.green.inverse.bold(`Thank you, data ${name} already deleted `)
+    );
+  }
+};
+// removeData("tesssss");
+
+module.exports = { simpanData, getContactList, detailsContact, removeData };
