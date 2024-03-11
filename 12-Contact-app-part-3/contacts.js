@@ -15,12 +15,18 @@ if (!fs.existsSync(dataPath)) {
   fs.writeFileSync(dataPath, "[]", "utf-8");
 }
 
+//Todo asbraksi readFile data from data.json, karena akan dipakai berulang
+
+const getDataJson = () => {
+  const file = fs.readFileSync("data/contacts.json", "utf-8");
+  const contacts = JSON.parse(file);
+  return contacts;
+};
+
 const simpanData = (name, email, noTelp) => {
   const contact = { name, email, noTelp };
 
-  const file = fs.readFileSync("data/contacts.json", "utf-8");
-
-  const contacts = JSON.parse(file); // JSON parse, convert string to json
+  const contacts = getDataJson();
 
   //check name duplikat
   const duplikat = contacts.find((contact) => contact.name === name);
@@ -67,4 +73,13 @@ const simpanData = (name, email, noTelp) => {
   // console.log(file);
 };
 
-module.exports = { simpanData };
+// Todo create method getContactList
+const getContactList = () => {
+  const contacts = getDataJson();
+  console.log(chalk.cyan.inverse.bold`----List contact name & No HP----\n`);
+  contacts.forEach(({ name, noTelp }, i) => {
+    return console.log(`${i + 1}. ${name} -- ${noTelp}`);
+  });
+};
+// getContactList();
+module.exports = { simpanData, getContactList };
