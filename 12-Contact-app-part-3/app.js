@@ -36,4 +36,20 @@ yargs.command({
   },
 });
 
+//Todo Menampilkan detail dari contact yang dipilih based on name
+yargs.command({
+  command: "details",
+  describe: "menampilkan name, email, no Hp",
+  builder: {
+    name: {
+      describe: "nama",
+      demandOption: true,
+      type: "string",
+    },
+  },
+  handler(argv) {
+    contacts.detailsContact(argv.name);
+  },
+});
+
 yargs.parse();
