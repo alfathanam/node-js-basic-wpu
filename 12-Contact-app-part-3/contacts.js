@@ -123,6 +123,9 @@ const removeData = (name) => {
     return dtName.name.toLowerCase() !== name.toLowerCase();
   });
   // console.log(newContacts);
+
+  // * Compare between contact and newContacts
+
   if (contacts.length === newContacts.length) {
     console.log(
       chalk.red.inverse.bold` data : ${name} yang anda cari tidak ditemukan`
