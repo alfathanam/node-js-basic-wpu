@@ -52,4 +52,22 @@ yargs.command({
   },
 });
 
+//todo Create command remove, remove data base on name
+yargs.command({
+  command: "remove",
+  describe: "Menghapus data yang dipilih based on name",
+  builder: {
+    builder: {
+      name: {
+        describe: "nama",
+        demandOption: true,
+        type: "string",
+      },
+    },
+  },
+  handler(argv) {
+    contacts.removeData(argv.name);
+  },
+});
+
 yargs.parse();
