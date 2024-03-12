@@ -2,17 +2,19 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+//todo Using EJS
+app.set("view engine", "ejs");
+
 app.get("/", (req, res) => {
-  res.sendFile("./index.html", { root: __dirname }); // *todo like before, sendFile html,pdf,image,css
+  // res.sendFile("./index.html", { root: __dirname });
+  res.render("index");
 });
 app.get("/contacts", (req, res) => {
-  res.sendFile("./contacts.html", { root: __dirname });
+  res.render("contacts");
 });
 app.get("/abouts", (req, res) => {
-  res.sendFile("./abouts.html", { root: __dirname });
+  res.render("abouts");
 });
-
-//todo Learn about req.params, and req.query
 
 app.get("/products/:id/category/:idCat", (req, res) => {
   res.send(`this product ${req.params.id} <br> 
