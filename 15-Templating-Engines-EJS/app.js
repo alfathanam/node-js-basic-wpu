@@ -5,6 +5,10 @@ const expressLayouts = require("express-ejs-layouts");
 //todo Using EJS
 app.set("view engine", "ejs");
 app.use(expressLayouts);
+
+// Renders a view and sends the rendered HTML string to the client. Optional parameters:
+// locals, an object whose properties define local variables for the view.
+// callback, a callback function. If provided, the method returns both the possible error and rendered string, but does not perform an automated response. When an error occurs, the method invokes next(err) internally.
 app.get("/", (req, res) => {
   const mhs = [
     {
@@ -29,7 +33,7 @@ app.get("/", (req, res) => {
     mahasiswa: mhs,
     layout: "layouts/main",
   });
-  //* sent data nama to index.ejs
+  //* sent data nama to index.ejs not
 });
 app.get("/contacts", (req, res) => {
   res.render("contacts", { title: "Halaman Contacts", layout: "layouts/main" });
