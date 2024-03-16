@@ -1,14 +1,43 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+
 const expressLayouts = require("express-ejs-layouts");
+
+//third party middleware
+const morgan = require("morgan");
+
 //todo Using EJS
 app.set("view engine", "ejs");
-app.use(expressLayouts);
 
-// Renders a view and sends the rendered HTML string to the client. Optional parameters:
-// locals, an object whose properties define local variables for the view.
-// callback, a callback function. If provided, the method returns both the possible error and rendered string, but does not perform an automated response. When an error occurs, the method invokes next(err) internally.
+// * Middleware functions are functions that have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle. The next middleware function is commonly denoted by a variable named next. Documentation https://expressjs.com/en/guide/using-middleware.html#using-middleware
+
+//Todo middleware type : Application-level-middleware ,Router-level-middleware, Error-handling-middleware, Built-in-middleware, Thirdparty-middleware
+
+//todo third party middleware
+app.use(expressLayouts); // example of middle ware
+app.use(morgan("dev"));
+
+// Todo Built-in Middleware
+
+app.use(express.static("public", { dotfile: "ignore" })); //Example 1 built-in middleware, ini agar file static yang ada direpo ini bisa diakses. Seperti html file, img, css dll
+
+// todo application middleware
+app.use((req, res, next) => {
+  // res.send(`${Date.now()}`);
+  console.log("time", Date.now());
+  next(); // if not invoke next will hanging
+});
+
+app.use((req, res, next) => {
+  // res.send(`${Date.now()}`);
+  console.log("Ini middleware 2");
+  next(); // if not invoke next will hanging
+
+  // ! after next dijalankan akan mencari middleware selanjutnya jika tidak ada akan menajlankan root /
+});
+
+// todo default on method GET tidak perlu menggunakan middleware
 app.get("/", (req, res) => {
   const mhs = [
     {
@@ -40,6 +69,7 @@ app.get("/contacts", (req, res) => {
 });
 app.get("/abouts", (req, res) => {
   res.render("abouts", { title: "Halaman Abouts", layout: "layouts/main" });
+  // next();
 });
 
 app.get("/products/:id/category/:idCat", (req, res) => {
