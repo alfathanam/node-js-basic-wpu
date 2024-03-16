@@ -7,23 +7,37 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
+            <th scope="col">No</th>
             <th scope="col">Nama</th>
             <th scope="col">No Hp</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
+          <% if (contacts.length === 0) { %>
           <tr>
-            <th scope="row">1</th>
-            <td>Aris</td>
-            <td>08773736736</td>
+            <td colspan="4">
+              <div class="alert alert-danger" role="alert">
+                <p>data contact tidak ada</p>
+                <a href="/" class="alert-link fw-light">&laquo;Back to home</a>.
+              </div>
+            </td>
+          </tr>
+          <% } %> <% contacts.forEach((contact,i) => { %>
+
+          <tr>
+            <th scope="row"><%= i+1 %></th>
+            <td><%= contact.name %></td>
+            <td><%= contact.noTelp %></td>
             <td>
-              <a href="" class="btn btn-success badge rounded-pill"
+              <a
+                href="details/<%= contact.name  %>"
+                class="btn btn-success badge rounded-pill"
                 ><i class="bi bi-info-circle"></i> action</a
               >
             </td>
           </tr>
+          <% }) %>
         </tbody>
       </table>
       <!-- End of table -->
