@@ -19,4 +19,15 @@ const getDataJson = () => {
   return contacts;
 };
 
-module.exports = getDataJson;
+// todo create function findContact for details contact page
+const findContact = (name) => {
+  const contacts = getDataJson();
+  // console.log(contact);
+  const contact = contacts.find((contact) => {
+    return contact.name == name;
+  });
+  return contact;
+};
+// console.log(findContact("aris"));
+
+module.exports = { getDataJson, findContact };
