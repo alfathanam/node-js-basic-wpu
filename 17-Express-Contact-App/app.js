@@ -1,4 +1,5 @@
 const express = require("express");
+const { getDataJson } = require("./utils/contacts"); // automate dibuatkan folder data
 const app = express();
 const port = 3000;
 
@@ -7,6 +8,7 @@ const expressLayouts = require("express-ejs-layouts");
 //todo  middleware
 app.set("view engine", "ejs");
 app.use(expressLayouts);
+app.use(express.static("public"));
 
 // todo default on method GET tidak perlu menggunakan middleware
 app.get("/", (req, res) => {
@@ -41,13 +43,6 @@ app.get("/contacts", (req, res) => {
 app.get("/abouts", (req, res) => {
   res.render("abouts", { title: "Halaman Abouts", layout: "layouts/main" });
   // next();
-});
-
-app.get("/products/:id/category/:idCat", (req, res) => {
-  res.send(`this product ${req.params.id} <br> 
-  this category is ${req.params.idCat} <br>
-  this color is ${req.query.color}`); //*id from products/:id
-  //   http://localhost:3000/products/1/category/shoes?color=red
 });
 
 app.use("/", (req, res) => {
