@@ -1,5 +1,5 @@
 const express = require("express");
-const { getDataJson } = require("./utils/contacts"); // automate dibuatkan folder data
+const { getDataJson, findContact } = require("./utils/contacts"); // automate dibuatkan folder data
 const app = express();
 const port = 3000;
 
@@ -37,9 +37,30 @@ app.get("/", (req, res) => {
   });
   //* sent data nama to index.ejs not
 });
+
+// Todo using getContactJson on this route
+
 app.get("/contacts", (req, res) => {
-  res.render("contacts", { title: "Halaman Contacts", layout: "layouts/main" });
+  const contacts = getDataJson();
+  // console.log(contacts);
+  res.render("contacts", {
+    title: "Halaman Contacts",
+    layout: "layouts/main",
+    contacts,
+  });
 });
+
+// Todo detailContact and create new Route
+
+app.get("/details/:nama", (req, res) => {
+  const contact = findContact(req.params.nama);
+  res.render("details", {
+    title: "Halaman Details Contact",
+    layout: "layouts/main",
+    contact,
+  });
+});
+
 app.get("/abouts", (req, res) => {
   res.render("abouts", { title: "Halaman Abouts", layout: "layouts/main" });
   // next();
