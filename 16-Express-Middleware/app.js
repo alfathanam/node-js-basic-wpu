@@ -14,15 +14,15 @@ app.set("view engine", "ejs");
 
 //Todo middleware type : Application-level-middleware ,Router-level-middleware, Error-handling-middleware, Built-in-middleware, Thirdparty-middleware
 
-//todo third party middleware
+//todo  3 third party middleware
 app.use(expressLayouts); // example of middle ware
 app.use(morgan("dev"));
 
-// Todo Built-in Middleware
+// Todo 2 Built-in Middleware
 
 app.use(express.static("public", { dotfile: "ignore" })); //Example 1 built-in middleware, ini agar file static yang ada direpo ini bisa diakses. Seperti html file, img, css dll
 
-// todo application middleware
+// todo 1 application middleware
 app.use((req, res, next) => {
   // res.send(`${Date.now()}`);
   console.log("time", Date.now());
