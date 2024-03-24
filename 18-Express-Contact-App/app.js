@@ -1,14 +1,20 @@
 const express = require("express");
-const { getDataJson, findContact } = require("./utils/contacts"); // automate dibuatkan folder data
+const { getDataJson, findContact, addContact } = require("./utils/contacts"); // automate dibuatkan folder data
 const app = express();
 const port = 3000;
-
+const bodyparser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
+
+const { check, validationResult, body } = require("express-validator");
 
 //todo  middleware
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.use(express.static("public"));
+
+// todo add middleware URL Encoded, for method post so data not undefined
+// app.use(express.urlencoded()); // Deprecreate
+app.use(bodyparser.urlencoded({ extended: true }));
 
 // todo default on method GET tidak perlu menggunakan middleware
 app.get("/", (req, res) => {
@@ -50,9 +56,40 @@ app.get("/contacts", (req, res) => {
   });
 });
 
+// Todo halaman  add contacts, create before contacts/:nama
+//* karena jika contacts/:add tidak ada maka akan akses yang contacts/:nama
+app.get("/contacts/add", (req, res) => {
+  res.render("add-contact", {
+    title: "Halaman Add Contact",
+    layout: "layouts/main",
+  });
+});
+
+// Todo Form data with method post
+
+app.post(
+  "/contacts",
+  [
+    check("email", "Email tidak valid").isEmail(),
+    body("noTelp").isMobilePhone("id-ID"),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // console.log(req.body);
+    // res.send("Data berhasil dikirim");
+    // addContact(req.body);
+    // res.redirect("/contacts"); // after data dikirim dan maka redirect ke get /contacts
+    //and show data contacts
+  }
+);
+
 // Todo detailContact and create new Route
 
-app.get("/details/:nama", (req, res) => {
+app.get("/contacts/:nama", (req, res) => {
   const contact = findContact(req.params.nama);
   res.render("details", {
     title: "Halaman Details Contact",
