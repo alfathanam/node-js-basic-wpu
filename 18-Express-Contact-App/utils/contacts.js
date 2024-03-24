@@ -28,6 +28,16 @@ const findContact = (name) => {
   });
   return contact;
 };
-// console.log(findContact("aris"));
 
-module.exports = { getDataJson, findContact };
+// todo  Menampilkan data contacts / dan menimpa File contacs.json
+const saveContacts = (contacts) => {
+  fs.writeFileSync("data/contacts.json", JSON.stringify(contacts)); // menimpa
+};
+// todo menambahkan contact baru
+const addContact = (contact) => {
+  const contacts = getDataJson();
+  contacts.push(contact); // Contacts array of object
+  saveContacts(contacts);
+};
+
+module.exports = { getDataJson, findContact, addContact };
