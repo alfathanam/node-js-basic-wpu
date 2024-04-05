@@ -6,6 +6,10 @@
       <!-- Add contact -->
       <a href="/contacts/add" class="btn btn-primary mb-2">Tambah Contact</a>
 
+      <% if (msg.length !== 0) { %>
+      <div class="alert alert-success" role="alert"><%= msg %></div>
+      <% } %>
+
       <!-- Table Data Contacts -->
       <table class="table">
         <thead>
