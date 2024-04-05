@@ -40,4 +40,12 @@ const addContact = (contact) => {
   saveContacts(contacts);
 };
 
-module.exports = { getDataJson, findContact, addContact };
+//todo Check Nama Duplicate
+
+const checkDuplicate = (nama) => {
+  const contacts = getDataJson();
+  return contacts.find((contact) => contact.name === nama);
+};
+// console.log(checkDuplicate("aris"));
+
+module.exports = { getDataJson, findContact, addContact, checkDuplicate };
