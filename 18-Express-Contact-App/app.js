@@ -1,5 +1,10 @@
 const express = require("express");
-const { getDataJson, findContact, addContact } = require("./utils/contacts"); // automate dibuatkan folder data
+const {
+  getDataJson,
+  findContact,
+  addContact,
+  checkDuplicate,
+} = require("./utils/contacts"); // automate dibuatkan folder data
 const app = express();
 const port = 3000;
 const bodyparser = require("body-parser");
@@ -70,20 +75,33 @@ app.get("/contacts/add", (req, res) => {
 app.post(
   "/contacts",
   [
+    body("name").custom((value) => {
+      const duplikat = checkDuplicate(value);
+      if (duplikat) {
+        throw new Error("Nama Contact sudah digunakan");
+        // same like return false but with message
+      }
+      return true;
+    }),
     check("email", "Email tidak valid").isEmail(),
-    body("noTelp").isMobilePhone("id-ID"),
+    check("noTelp", "no hp tidak valid").isMobilePhone("id-ID"),
   ],
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      // return res.status(400).json({ errors: errors.array() });
+      res.render("add-contact", {
+        title: "Form Tambah Data Contact",
+        layout: "layouts/main",
+        errors: errors.array(),
+      });
+    } else {
+      // console.log(req.body);
+      // res.send("Data berhasil dikirim");
+      addContact(req.body);
+      res.redirect("/contacts"); // after data dikirim dan maka redirect ke get /contacts
     }
-
-    // console.log(req.body);
-    // res.send("Data berhasil dikirim");
-    // addContact(req.body);
-    // res.redirect("/contacts"); // after data dikirim dan maka redirect ke get /contacts
-    //and show data contacts
+    // Playback on 00:30:47 node js 18
   }
 );
 
