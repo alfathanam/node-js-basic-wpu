@@ -2,6 +2,19 @@
   <div class="row">
     <div class="col-md-6">
       <h2>Form tambah data contact</h2>
+
+      <!-- Checking ada error ketika input new contact -->
+      <% if (typeof errors != 'undefined') { %>
+      <div class="alert alert-danger" role="alert">
+        <ul>
+          <% errors.forEach(error => { %>
+          <li><%= error.msg %></li>
+          <% }) %>
+        </ul>
+      </div>
+
+      <% } %>
+
       <form method="post" action="/contacts">
         <div class="mb-3">
           <label for="name" class="form-label">Nama</label>
