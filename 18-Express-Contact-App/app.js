@@ -11,6 +11,9 @@ const bodyparser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 
 const { check, validationResult, body } = require("express-validator");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const flash = require("connect-flash");
 
 //todo  middleware
 app.set("view engine", "ejs");
@@ -20,6 +23,18 @@ app.use(express.static("public"));
 // todo add middleware URL Encoded, for method post so data not undefined
 // app.use(express.urlencoded()); // Deprecreate
 app.use(bodyparser.urlencoded({ extended: true }));
+
+//todo Configurasi Flash,session,cookie. Do alert after success insert form
+app.use(cookieParser("secret"));
+app.use(
+  session({
+    cookie: { maxAge: 6000 },
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(flash());
 
 // todo default on method GET tidak perlu menggunakan middleware
 app.get("/", (req, res) => {
@@ -58,6 +73,7 @@ app.get("/contacts", (req, res) => {
     title: "Halaman Contacts",
     layout: "layouts/main",
     contacts,
+    msg: req.flash("msg"),
   });
 });
 
@@ -99,6 +115,9 @@ app.post(
       // console.log(req.body);
       // res.send("Data berhasil dikirim");
       addContact(req.body);
+      //before redirect to contacts, flash message terlebih dahulu **Additional
+      req.flash("msg", "data contact berhasil ditambahkan");
+
       res.redirect("/contacts"); // after data dikirim dan maka redirect ke get /contacts
     }
     // Playback on 00:30:47 node js 18
