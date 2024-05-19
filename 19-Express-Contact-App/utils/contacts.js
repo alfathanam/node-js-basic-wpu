@@ -60,10 +60,25 @@ const deleteContact = (nama) => {
   saveContacts(filteredContact);
 };
 
+//todo Create method Update Contacts
+const updateContacts = (contactBaru) => {
+  const contacs = getDataJson();
+
+  //hilangkan contact lama yang namanya sama dengan oldName
+  const filteredContact = contacs.filter((contact) => {
+    return contact.name !== contactBaru.oldName;
+  });
+  delete contactBaru.oldName;
+  filteredContact.push(contactBaru);
+  saveContacts(filteredContact);
+  // console.log(filteredContact, contactBaru);
+};
+
 module.exports = {
   getDataJson,
   findContact,
   addContact,
   checkDuplicate,
   deleteContact,
+  updateContacts,
 };
