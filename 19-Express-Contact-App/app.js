@@ -5,6 +5,7 @@ const {
   addContact,
   checkDuplicate,
   deleteContact,
+  updateContacts,
 } = require("./utils/contacts"); // automate dibuatkan folder data
 const app = express();
 const port = 3000;
@@ -182,10 +183,10 @@ app.post(
         contact: req.body,
       });
     } else {
-      res.send(req.body);
-      // addContact(req.body);
-      // req.flash("msg", "data contact berhasil diubah");
-      // res.redirect("/contacts"); // after data dikirim dan maka redirect ke get /contacts
+      // res.send(req.body);
+      updateContacts(req.body);
+      req.flash("msg", "data contact berhasil diubah");
+      res.redirect("/contacts"); // after data dikirim dan maka redirect ke get /contacts
     }
     // Playback on 00:30:47 node js 18
   }
@@ -210,7 +211,7 @@ app.get("/abouts", (req, res) => {
 app.use("/", (req, res) => {
   res.send("Default, always dijalankan");
 });
-
+// todo test
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
