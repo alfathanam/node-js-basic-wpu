@@ -13,11 +13,13 @@ const bodyparser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 
 const { check, validationResult, body } = require("express-validator");
+
+//todo cookie parser, session connect-flash
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 
-//todo  middleware
+//todo  middleware ejs layout
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.use(express.static("public"));
@@ -87,8 +89,7 @@ app.get("/contacts/add", (req, res) => {
     layout: "layouts/main",
   });
 });
-
-// Todo Form data with method post
+// Todo Form tambah data with method post
 
 app.post(
   "/contacts",

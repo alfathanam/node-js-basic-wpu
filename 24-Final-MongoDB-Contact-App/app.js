@@ -5,7 +5,7 @@ const { body, validationResult, check } = require("express-validator");
 const methodOverride = require("method-override");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 //todo require contact and require connection from db
 require("./utils/db");
